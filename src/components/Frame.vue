@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="kz-layout">
-      <kz-aside  @isload="loaded"  :test="test" :fold="fold" :current-position="currentPosition" @left-change="leftChange" :toggle="toggle"></kz-aside>
+      <kz-aside  @isload="loaded"  :test="test" :fold="fold" :current-position="currentPosition" :current-tab="currentTab" :tab-data="tabData" :tab-index="tabIndex" @left-change="leftChange" @add-tabs="addTabs" :toggle="toggle"></kz-aside>
       <kz-head   @tab-change="tabChange" @changecompont="changecompont" @changestyle="changestyle" :enterprise-list="enterpriseList" :fault-com="faultCom" :nav-list="navList" :current-position="currentPosition"></kz-head>
         <div class="kz-content" :style="'left:'+left+'px'">
             <slot></slot>
@@ -34,7 +34,7 @@ export default {
       toggle:false
     };
   },
-  props: ["test", "fold", "enterpriseList", "faultCom","navList","currentPosition"],
+  props: ["test", "fold", "enterpriseList", "faultCom","navList","currentPosition","tabData","tabIndex","currentTab"],
   components: {
     "kz-aside": Aside,
     "kz-head": Head
@@ -53,21 +53,24 @@ export default {
       this.load = false;
     },
     changecompont(i) {
-      console.log(i);
+      //console.log(i);
       this.$emit("changecompont", i);
     },
     changestyle(i){
-      console.log(i);
+     // console.log(i);
       this.$emit("changestyle", i);
     },
     tabChange(index){
-        console.log(index);
-        this.$emit('tab-change', index)
+      //  console.log(index);
+        this.$emit('tab-change', index);
     },
     leftChange(leftMsg){
-      console.log(leftMsg);
+     // console.log(leftMsg);
       this.left=leftMsg.left;
       this.toggle=leftMsg.toggle;
+    },
+    addTabs(tabId){
+      this.$emit("add-tabs",tabId);
     }
   }
 };
@@ -94,10 +97,11 @@ export default {
   right: 0;
   z-index: 666;
   width: auto;
-  background: #ffffff;
+  background: #ecf0f5;
   border-top: 3px solid #d2d6de;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   margin: 15px;
   margin-top:0;
+  margin-left: 1px;
 }
 </style>

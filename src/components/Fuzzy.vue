@@ -2,10 +2,10 @@
   <div  v-clickoutside="handlerEnd" :class="'kz-fuzzy '+(isSelect?'is-focus':'')">
       <input 
         ref="sercheInput"
-        @focus="isSelect = true"
+        @focus="inputHandlerFocus"
         @keydown="handlerKeydown"
         @keyup="handlerKeyup"
-         placeholder="请输入字符查询" 
+         :placeholder="placeholder" 
          v-model="inputValue" 
          class="kz-fuzzy-input" 
       type="text" />
@@ -85,7 +85,7 @@ export default {
         return data;
       }
       return data.filter((item) => {
-        return this.match(item);
+        return this.match(key,item);
       });
     },
     warpWidth() {
@@ -134,9 +134,17 @@ export default {
       default: function(item) {
         return true;
       }
+    },
+    placeholder: {
+      type: String,
+      default:"请输入字符查询"
     }
   },
   methods: {
+    inputHandlerFocus(e){
+      this.isSelect=true;
+      this.$emit("focus", e);
+    },
     handlerKeyup(e) {
       this.$emit("keyup", e);
     },
@@ -160,12 +168,14 @@ export default {
         //console.log(this.$refs)
         try {
           if (menu.children.length > 1) {
-            let target = this.$refs.droplist.children[1].children[this.current];
+            var target = this.$refs.droplist.children[1].children[this.current];
           } else {
-            let target = this.$refs.droplist.children[0].children[this.current];
+            var target = this.$refs.droplist.children[0].children[this.current];
           }
-          scrollIntoView(menu, target);
-        } catch (error) {}
+          scrollIntoView(menu, target); 
+        } catch (error) {
+         // console.log(error)
+        }
       }
       if (e.code != "Tab" && e.code != "Enter") {
         this.fold = false;
@@ -282,8 +292,7 @@ export default {
 }
 .kz-droplist {
   border-radius: 5px;
-  max-height: 150px;
-  overflow: auto;
+ 
   background: #fff;
   padding: 3px;
   list-style: none;

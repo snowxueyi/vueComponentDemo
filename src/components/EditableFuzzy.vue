@@ -7,7 +7,8 @@
                 :match="match"
                 :fitcount="fitcount"
                  style="width: 100%;height:100%"
-                   @keyup="handlerKeyup"  
+                   @keyup="handlerKeyup"
+                   @focus="inputHandlerFocus"    
                    @change="handlerChange" 
                    @keydown="handlerKeydown" 
                    v-model="inputValue" 
@@ -82,6 +83,9 @@ export default {
   mounted() {
   },
   methods: {
+    inputHandlerFocus(e){
+      this.$emit("focus",e);
+    },
     handlerFocus(e){
       this.eidtCell();
     },
@@ -100,7 +104,6 @@ export default {
          this.eidt = false;
         this.$emit("end",this);
       }
-     
     },
     handlerKeyup(e){
       this.$emit("keyup", e);
@@ -119,6 +122,7 @@ export default {
 .kz-fuzzy-fit {
   display: inline-block;
   width: 100%;
+  min-height: 15px;
   height: 100%;
 }
 .kz-fuzzy-fit .edits {

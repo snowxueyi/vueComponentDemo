@@ -9,31 +9,32 @@ import Head from '@/components/com/Head';
 import KzTabs from './components/Tabs/src/tabs.vue'
 import KzNav from './components/Tabs/src/tab-nav.vue'
 import KzTabPanel from './components/Tabs/src/tab-panel.vue'
+import KzCountDown from './components/CountDown.vue'
 
 
-// let kzui = { Card,Fuzzy,EditableFuzzy,EditableInput,Frame,FrameWarp,Aside,Head,KzTabs,KzNav,KzTabPanel }
-// const install = () => {
-//   for (let k in kzui) {
-//     window.Vue.component(kzui[k].name, kzui[k]);
-//     console.log(kzui[k])
-//   }
-// }
-// (typeof window !== 'undefined' && window.Vue && install()) || (kzui.install = install)
-// export default kzui;
+import querystring from "@/lib/querystring";
+import http from "@/lib/http";
+import cookie from "@/lib/cookie";
+import object from "@/lib/object";
+import scrollIntoView from "@/lib/scroll-into-view";
 
-if (typeof window !== 'undefined' && window.Vue) {
-  // Vue.use(Element)
+require("@/lib/string");
+require("@/lib/date");
 
-  window.Vue.component('kz-frame', Frame);
-  window.Vue.component('kz-card', Card);
-  window.Vue.component('kz-frame-warp', FrameWarp);
-  window.Vue.component('kz-editable-fuzzy', EditableFuzzy)
-  window.Vue.component('kz-editable-input', EditableInput)
-  window.Vue.component('kz-tabs', KzTabs)
-  window.Vue.component('kz-tab-nav', KzNav)
-  window.Vue.component('kz-tab-panel', KzTabPanel)
-  window.Vue.component('kz-fuzzy', Fuzzy)
-  window.Vue.component('kz-aside', Aside)
-  window.Vue.component('kz-head', Head)
+
+let kzui = { Card, Fuzzy, EditableFuzzy, EditableInput, Frame, FrameWarp, Aside, Head, KzTabs, KzNav, KzTabPanel,KzCountDown }
+const install = () => {
+  for (let k in kzui) {
+    window.Vue.component(kzui[k].name, kzui[k]);
+    // console.log(kzui[k])
+  }
+ 
+  
+//  console.log( window.Vue)
+  window.kzPublicApi={
+    http,querystring,cookie,object,scrollIntoView
+  }
 }
+// export default kzui;
+(typeof window !== 'undefined' && window.Vue && install()) || (kzui.install = install)
 export default kzui;
